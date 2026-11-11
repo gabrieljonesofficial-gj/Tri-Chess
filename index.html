@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tri-Chess</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<h1>Tri-Chess</h1><p class="sub">Three Kingdoms. Two Sides. One Battlefield.</p>
+<div id="bar">
+<div class="row1"><div class="grp"><label for="lvl">Difficulty</label><select class="n" id="lvl" title="Computer difficulty" onchange="level=this.value"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select><button class="n go" id="startBtn" onclick="start()">▶ Start game</button></div><span class="rt"><span id="pts" class="badge">⭐ 5 pts</span><button class="n" id="sndBtn" onclick="toggleSnd()" title="Sound on/off">🔊</button></span></div>
+<div class="row2"><button class="n" onclick="hintMove()" title="Costs 1 point">💡 Hint · 1 pt</button><button class="n" onclick="undo()">↶ Undo</button><button class="n" onclick="askSurrender()">🏳 Surrender</button><button class="n" onclick="askNew()">↻ New game</button><button class="n r5" onclick="document.getElementById('side').classList.toggle('open')">📜 Rules &amp; Story</button></div>
+</div>
+<div id="status"></div>
+<div id="odds"><div id="oL"></div><div id="oU"></div></div><div class="cap">Estimated winning chance (a rough guess from material, checks and fallen kings)</div>
+<div id="hintbox"></div>
+<div id="rvbox"></div>
+<div id="main"><div id="wrap"><div id="board"><div id="zone"></div><div class="grave" id="gL" style="grid-column:1/5;grid-row:9/13"></div><div class="grave" id="gU" style="grid-column:13/17;grid-row:9/13"></div></div></div><aside id="side"><button class="n back" onclick="document.getElementById('side').classList.remove('open')">← Back to game</button>
+<h2>Storyline: Game of Thrones</h2>
+<p>Three kingdoms. Three kings. But only two sides. Two kingdoms have united, leaving one to face them alone. Allies must fight together, enemies must stand their ground, and every king must fight for survival.<br>Trust your ally. Outsmart your enemies. Protect your crown. One battlefield. No room for weakness. Let the battle begin!</p>
+<h2>Special game rules</h2>
+<ol>
+<li><b>Three players, two sides:</b> you (Player 1, Lone Kingdom) fight alone against Alpha and Beta (Players 2 and 3, the United Kingdom, played by the computer).</li>
+<li><b>Turn order:</b> Alpha → Lone → Beta → Lone. If one ally falls, the survivor alternates turns with Lone.</li>
+<li><b>Allied protection:</b> Alpha and Beta can’t capture each other’s pieces or kings. They can protect each other’s kings and coordinate attacks on Lone.</li>
+<li><b>King safety:</b> a king falls only by checkmate. An ally gets a normal turn to rescue a checked ally before that ally’s next turn.</li>
+<li><b>Pawn direction choice:</b> inside the red War Zone a pawn may keep going straight until it turns left or right. Once it turns, the route is locked.</li>
+<li><b>Pawn promotion:</b> only on an opponent’s board edge (Lone pawns on Alpha’s or Beta’s back edge; Alpha and Beta pawns on Lone’s back row). It becomes a Queen, Rook, Bishop or Knight and is treated as a General (★).</li>
+<li><b>Army inheritance:</b> when Lone checkmates the first allied king, the surviving ally inherits the fallen player’s remaining army.</li>
+<li><b>General resurrection:</b> at that same moment, Lone’s captured Generals (including promoted pawns) return. Ordinary pawns and kings don’t. This happens only once.</li>
+<li><b>Victory:</b> Lone wins by checkmating and eliminating both allied kings, either at the same time or one after another — a Perfect Victory. Both kings must be eliminated. The United Kingdom wins by defeating Lone while both its kings survive. If the United Kingdom defeats Lone after losing one king, the game is a Draw. If neither side achieves its objective, it is also a Draw. A king’s elimination is permanent.</li>
+<li><b>Final elimination:</b> once the last opposing king is checkmated, the game ends immediately. No further resurrection.</li>
+</ol><h2>Points &amp; hints</h2><p>Earn points by capturing: Pawn 1, Knight 3, Bishop 3, Rook 5, Queen 9, and 10 for checkmating a king. Each hint costs 1 point. You start with 5.</p></aside></div>
+<section id="hbox"><div class="hh"><b>📜 Move history</b><span id="hcount"></span><button class="n sm" onclick="rvStart()">🎬 Play review</button></div><div id="hlist"></div></section>
+<div class="legend"><span><i class="dot" style="background:#111"></i>Alpha (Computer)</span><span><i class="dot" style="background:#fff"></i>Lone (You)</span><span><i class="dot" style="background:#f5c400"></i>Beta (Computer)</span><span>★ General (promoted)</span></div>
+<canvas id="conf"></canvas><div id="res"><div><div class="ic" id="resi"></div><h2 id="rest"></h2><p id="resm"></p><p><b id="resp"></b></p><button class="n" onclick="closeRes()">View board</button><button class="n" onclick="closeRes();rvStart()">🎬 Play review</button><button class="n go" onclick="closeRes();init()">New game</button></div></div>
+<div id="cf"><div><p><b id="cft"></b></p><p id="cfm"></p><button class="n" onclick="closeCf()">Keep playing</button><button class="n danger" id="cfy" onclick="closeCf();if(cfAct)cfAct()"></button></div></div>
+<div id="modal"><div><p><b>Promote to:</b></p><span id="opts"></span></div></div>
+<script src="script.js"></script></body></html>
